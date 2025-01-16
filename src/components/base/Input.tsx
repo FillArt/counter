@@ -1,9 +1,13 @@
 import React, {ChangeEvent} from 'react';
 
-export const Input = () => {
+type InputProps = {
+    placeholder?: string;
+}
 
-    const [value, setValue] = React.useState('111');
+export const Input = (props: InputProps) => {
+    const { placeholder } = props;
+    const [value, setValue] = React.useState('');
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
 
-    return <input type="text" value={value} onChange={onChangeHandler} />;
+    return <input type="text" value={value} placeholder={placeholder} onChange={onChangeHandler} />;
 };

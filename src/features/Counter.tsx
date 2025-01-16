@@ -4,7 +4,10 @@ import {Input} from "../components/base/Input";
 export const Counter = () => {
     return (
         <div>
-            <Input />
+            <div style={{ display: 'flex' }}>
+                <Input placeholder={'Set min value'} />
+            </div>
+
         </div>
     );
 };
