@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 
-export const Home = () => {
+type HomeProps = {
+    children: ReactNode;
+}
+
+export const Home = (props: HomeProps) => {
+
+    const {children} = props;
+
     return (
         <div>
-
+            {children}
         </div>
     );
 };
-
-export default Home;

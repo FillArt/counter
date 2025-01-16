@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 
 export const Input = () => {
-    return (
-        <div>
 
-        </div>
-    );
+    const [value, setValue] = React.useState('111');
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+
+    return <input type="text" value={value} onChange={onChangeHandler} />;
 };
