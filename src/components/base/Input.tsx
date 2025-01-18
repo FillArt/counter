@@ -1,14 +1,15 @@
 import React, {ChangeEvent} from 'react';
 
 type InputProps = {
-    value: number
-    callback: (value: number) => void
     placeholder: string;
+    value: number;
 }
 
 export const Input = (props: InputProps) => {
-    const { placeholder, callback, value } = props;
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => callback(Number(e.target.value));
+    const { placeholder, value} = props;
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.currentTarget.value);
+    }
 
-    return <input type="number" value={value} placeholder={placeholder} onChange={onChangeHandler} />;
+    return <input type="number" value={value} placeholder={placeholder} onChange={(e) => onChangeHandler(e)} />;
 };
