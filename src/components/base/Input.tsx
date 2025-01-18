@@ -1,9 +1,9 @@
 import React, {ChangeEvent} from 'react';
-import {setStartValue} from "../../reducers/counterReducer";
 
 type InputProps = {
     placeholder: string,
     value: number,
+    error: boolean,
     callback?: (value: number) => void
 }
 
@@ -13,5 +13,9 @@ export const Input = (props: InputProps) => {
         callback?.(Number(e.currentTarget.value));
     }
 
-    return <input type="number" value={value} placeholder={placeholder} onChange={(e) => onChangeHandler(e)}/>;
+    const inputStyle = props.error
+        ? { border: '1px solid red', padding: '5px' }
+        : { padding: '5px' };
+
+    return <input type="number" style={inputStyle} value={value} placeholder={placeholder} onChange={(e) => onChangeHandler(e)}/>;
 };

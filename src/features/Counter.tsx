@@ -1,9 +1,12 @@
-import React, {useCallback, useReducer} from 'react';
+import React, {useCallback, useReducer, useState} from 'react';
 import {Input} from "../components/base/Input";
 import {Button} from "../components/base/Button";
 import {counterReducer, setCurrentValue, setMaxValue, setStartValue} from "../reducers/counterReducer";
 
 export const Counter = () => {
+
+    const [errorStart, setErrorStart] = useState(false)
+    const [errorMax, setErrorMax] = useState(false)
 
     const [state, dispatchState] = useReducer(counterReducer,
         {
@@ -14,11 +17,28 @@ export const Counter = () => {
         }
     );
 
-    const setStart = useCallback((value: number) => dispatchState(setStartValue(value)), [dispatchState]);
-    const setMax = useCallback((value: number) => dispatchState(setMaxValue(value)), [dispatchState]);
+    const setStart = useCallback((value: number) => {
+        setErrorMax(false)
+        setErrorStart(false)
+        dispatchState(setStartValue(value))
+    }, [dispatchState]);
+    const setMax = useCallback((value: number) => {
+        setErrorMax(false)
+        setErrorStart(false)
+        dispatchState(setMaxValue(value))
+    }, [dispatchState]);
     const setValue = useCallback(() => {
-        if(!(state.startValue >= 0 && state.maxValue >= 0)) {alert('Error!'); return; }
-        if(state.maxValue < state.startValue) {alert('Error!'); return; }
+        if(!(state.startValue >= 0 && state.maxValue >= 0)) {
+            alert('Error!');
+            setErrorMax(true)
+            setErrorStart(true)
+            return;
+        }
+        if(state.maxValue <= state.startValue) {
+            setErrorMax(true)
+            alert('Error!');
+            return;
+        }
 
         dispatchState(setCurrentValue())
     }, [state, dispatchState]);
@@ -33,8 +53,8 @@ export const Counter = () => {
             maxWidth: '400px'
         }}>
             <div style={{display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '200px'}}>
-                <Input placeholder={'Set start value'} callback={(value) => setStart(value)} value={state.startValue} />
-                <Input placeholder={'Set max value'} callback={(value) => setMax(value)} value={state.maxValue} />
+                <Input placeholder={'Set start value'} error={errorStart} callback={(value) => setStart(value)} value={state.startValue} />
+                <Input placeholder={'Set max value'} error={errorMax} callback={(value) => setMax(value)} value={state.maxValue} />
                 <Button label={'Set value'} onClick={() => setValue()} />
             </div>
 
