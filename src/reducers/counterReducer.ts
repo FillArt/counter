@@ -6,9 +6,12 @@ export const counterReducer = (state: CounterItem, action: TsarType): CounterIte
             return {...state, startValue: action.payload.digit};
 
         case "SET-MAX-VALUE":
-            return state;
+            return {...state, maxValue: action.payload.digit};
 
         case "SET-CURRENT-VALUE":
+            return state;
+
+        default:
             return state;
     }
 }
