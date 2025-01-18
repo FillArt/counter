@@ -8,8 +8,10 @@ export const counterReducer = (state: CounterItem, action: TsarType): CounterIte
         case "SET-MAX-VALUE":
             return {...state, maxValue: action.payload.digit};
 
-        case "SET-CURRENT-VALUE":
-            return state;
+        case "SET-CURRENT-VALUE": {
+            return {...state, currentValue: state.startValue};
+        }
+
 
         default:
             return state;
@@ -29,10 +31,7 @@ export const setMaxValue = (digit: number) => ({
 } as const);
 
 
-export const setCurrentValue = (digit: number) => ({
+export const setCurrentValue = () => ({
     type: 'SET-CURRENT-VALUE',
-    payload: {
-        digit
-    }
 } as const)
 

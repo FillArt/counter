@@ -1,7 +1,7 @@
 import React, {useCallback, useReducer} from 'react';
 import {Input} from "../components/base/Input";
 import {Button} from "../components/base/Button";
-import {counterReducer, setMaxValue, setStartValue} from "../reducers/counterReducer";
+import {counterReducer, setCurrentValue, setMaxValue, setStartValue} from "../reducers/counterReducer";
 
 export const Counter = () => {
 
@@ -16,6 +16,7 @@ export const Counter = () => {
 
     const setStart = useCallback((value: number) => dispatchState(setStartValue(value)), [dispatchState]);
     const setMax = useCallback((value: number) => dispatchState(setMaxValue(value)), [dispatchState]);
+    const setValue = useCallback(() => dispatchState(setCurrentValue()), [dispatchState]);
 
     return (
         <div style={{
@@ -29,12 +30,12 @@ export const Counter = () => {
             <div style={{display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '200px'}}>
                 <Input placeholder={'Set start value'} callback={(value) => setStart(value)} value={state.startValue} />
                 <Input placeholder={'Set max value'} callback={(value) => setMax(value)} value={state.maxValue} />
-                <Button label={'Set value'} onClick={() => alert('Set start value')} />
+                <Button label={'Set value'} onClick={() => setValue()} />
             </div>
 
             <div
                 style={{display: 'flex', flexDirection: 'column', gap: '10px', textAlign: "center", maxWidth: '200px'}}>
-                <h1 style={{margin: '0px'}}>0</h1>
+                <h1 style={{margin: '0px'}}>{state.currentValue}</h1>
 
                 <div style={{display: 'flex', gap: '10px', maxWidth: '200px'}}>
                     <Button label={'Inc'} onClick={() => alert('Inc')} />
