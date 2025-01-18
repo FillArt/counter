@@ -29,14 +29,12 @@ export const Counter = () => {
     }, [dispatchState]);
     const setValue = useCallback(() => {
         if(!(state.startValue >= 0 && state.maxValue >= 0)) {
-            alert('Error!');
             setErrorMax(true)
             setErrorStart(true)
             return;
         }
         if(state.maxValue <= state.startValue) {
             setErrorMax(true)
-            alert('Error!');
             return;
         }
 
@@ -55,7 +53,7 @@ export const Counter = () => {
             <div style={{display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '200px'}}>
                 <Input placeholder={'Set start value'} error={errorStart} callback={(value) => setStart(value)} value={state.startValue} />
                 <Input placeholder={'Set max value'} error={errorMax} callback={(value) => setMax(value)} value={state.maxValue} />
-                <Button label={'Set value'} onClick={() => setValue()} />
+                <Button label={'Set value'} disabled={(errorStart || errorMax)} onClick={() => setValue()} />
             </div>
 
             <div
@@ -63,7 +61,7 @@ export const Counter = () => {
                 <h1 style={{margin: '0px'}}>{state.currentValue}</h1>
 
                 <div style={{display: 'flex', gap: '10px', maxWidth: '200px'}}>
-                    <Button label={'Inc'} onClick={() => alert('Inc')} />
+                    <Button label={'Inc'} disabled={(errorStart || errorMax)} onClick={() => alert('Inc')} />
                     <Button label={'Reset'} onClick={() => alert('Reset')} />
                 </div>
             </div>
