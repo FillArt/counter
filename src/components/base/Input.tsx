@@ -1,15 +1,17 @@
 import React, {ChangeEvent} from 'react';
+import {setStartValue} from "../../reducers/counterReducer";
 
 type InputProps = {
-    placeholder: string;
-    value: number;
+    placeholder: string,
+    value: number,
+    callback?: (value: number) => void
 }
 
 export const Input = (props: InputProps) => {
-    const { placeholder, value} = props;
+    const {placeholder, value, callback} = props;
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log(e.currentTarget.value);
+        callback?.(Number(e.currentTarget.value));
     }
 
-    return <input type="number" value={value} placeholder={placeholder} onChange={(e) => onChangeHandler(e)} />;
+    return <input type="number" value={value} placeholder={placeholder} onChange={(e) => onChangeHandler(e)}/>;
 };

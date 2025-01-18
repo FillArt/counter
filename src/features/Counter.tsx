@@ -1,7 +1,7 @@
-import React, {useReducer} from 'react';
+import React, {useCallback, useReducer} from 'react';
 import {Input} from "../components/base/Input";
 import {Button} from "../components/base/Button";
-import {counterReducer} from "../reducers/counterReducer";
+import {counterReducer, setStartValue} from "../reducers/counterReducer";
 
 export const Counter = () => {
 
@@ -14,6 +14,8 @@ export const Counter = () => {
         }
     );
 
+    const setStart = useCallback((value: number) => dispatchState(setStartValue(value)), [dispatchState]);
+
     return (
         <div style={{
             display: "flex",
@@ -24,7 +26,7 @@ export const Counter = () => {
             maxWidth: '400px'
         }}>
             <div style={{display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '200px'}}>
-                <Input placeholder={'Set start value'} value={state.startValue} />
+                <Input placeholder={'Set start value'} callback={(value) => setStart(value)} value={state.startValue} />
                 <Input placeholder={'Set max value'} value={state.maxValue} />
                 <Button label={'Set value'} onClick={() => alert('Set start value')} />
             </div>
