@@ -16,7 +16,12 @@ export const Counter = () => {
 
     const setStart = useCallback((value: number) => dispatchState(setStartValue(value)), [dispatchState]);
     const setMax = useCallback((value: number) => dispatchState(setMaxValue(value)), [dispatchState]);
-    const setValue = useCallback(() => dispatchState(setCurrentValue()), [dispatchState]);
+    const setValue = useCallback(() => {
+        if(!(state.startValue >= 0 && state.maxValue >= 0)) {alert('Error!'); return; }
+        if(state.maxValue < state.startValue) {alert('Error!'); return; }
+
+        dispatchState(setCurrentValue())
+    }, [state, dispatchState]);
 
     return (
         <div style={{

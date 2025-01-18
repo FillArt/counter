@@ -12,7 +12,6 @@ export const counterReducer = (state: CounterItem, action: TsarType): CounterIte
             return {...state, currentValue: state.startValue};
         }
 
-
         default:
             return state;
     }
