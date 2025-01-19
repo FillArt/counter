@@ -16,6 +16,10 @@ export const counterReducer = (state: CounterItem, action: TsarType): CounterIte
             return {...state, currentValue: state.currentValue++};
         }
 
+        case "SET-ERROR-MESSAGE": {
+            return {...state, error: action.payload.message};
+        }
+
         default:
             return state;
     }
@@ -41,3 +45,11 @@ export const setCurrentValue = () => ({
 export const incrementCurrentValue = () => ({
     type: 'INCREMENT-CURRENT-VALUE',
 } as const)
+
+export const setErrorMessage = (message: string) => ({
+    type: 'SET-ERROR-MESSAGE',
+    payload: {
+        message
+    }
+} as const)
+

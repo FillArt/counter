@@ -1,4 +1,10 @@
-import {setMaxValue, setStartValue, setCurrentValue, incrementCurrentValue} from "../reducers/counterReducer";
+import {
+    setMaxValue,
+    setStartValue,
+    setCurrentValue,
+    incrementCurrentValue,
+    setErrorMessage
+} from "../reducers/counterReducer";
 
 export type CounterItem = {
     startValue: number,
@@ -11,5 +17,6 @@ type MaxValue = ReturnType<typeof setMaxValue>
 type StartValue = ReturnType<typeof setStartValue>
 type CurrentValue = ReturnType<typeof setCurrentValue>
 type IncrementValue = ReturnType<typeof incrementCurrentValue>
+type errorMessage = ReturnType<typeof setErrorMessage>
 
-export type TsarType = MaxValue | StartValue | CurrentValue | IncrementValue;
+export type TsarType = MaxValue | StartValue | CurrentValue | IncrementValue | errorMessage;

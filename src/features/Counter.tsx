@@ -4,7 +4,7 @@ import {Button} from "../components/base/Button";
 import {
     counterReducer,
     incrementCurrentValue,
-    setCurrentValue,
+    setCurrentValue, setErrorMessage,
     setMaxValue,
     setStartValue
 } from "../reducers/counterReducer";
@@ -27,22 +27,26 @@ export const Counter = () => {
         setErrorMax(false)
         setErrorStart(false)
         dispatchState(setStartValue(value))
+        dispatchState(setErrorMessage(''))
     }, [dispatchState]);
 
     const setMax = useCallback((value: number) => {
         setErrorMax(false)
         setErrorStart(false)
         dispatchState(setMaxValue(value))
+        dispatchState(setErrorMessage(''))
     }, [dispatchState]);
 
     const setValue = useCallback(() => {
         if(!(state.startValue >= 0 && state.maxValue >= 0)) {
             setErrorMax(true)
             setErrorStart(true)
+            dispatchState(setErrorMessage('Values less than 0'))
             return;
         }
         if(state.maxValue <= state.startValue) {
             setErrorMax(true)
+            dispatchState(setErrorMessage('The maximum value is less than or equal to the starting value.'))
             return;
         }
 
@@ -55,8 +59,10 @@ export const Counter = () => {
             dispatchState(incrementCurrentValue())
         } else {
             setErrorMax(true)
+            dispatchState(setErrorMessage('You have reached the maximum value'))
         }
     },[state, dispatchState]);
+
 
     return (
         <div style={{
