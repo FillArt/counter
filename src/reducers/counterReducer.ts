@@ -12,6 +12,10 @@ export const counterReducer = (state: CounterItem, action: TsarType): CounterIte
             return {...state, currentValue: state.startValue};
         }
 
+        case "INCREMENT-CURRENT-VALUE": {
+            return {...state, currentValue: state.currentValue++};
+        }
+
         default:
             return state;
     }
@@ -34,3 +38,6 @@ export const setCurrentValue = () => ({
     type: 'SET-CURRENT-VALUE',
 } as const)
 
+export const incrementCurrentValue = () => ({
+    type: 'INCREMENT-CURRENT-VALUE',
+} as const)

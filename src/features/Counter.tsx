@@ -1,7 +1,13 @@
 import React, {useCallback, useReducer, useState} from 'react';
 import {Input} from "../components/base/Input";
 import {Button} from "../components/base/Button";
-import {counterReducer, setCurrentValue, setMaxValue, setStartValue} from "../reducers/counterReducer";
+import {
+    counterReducer,
+    incrementCurrentValue,
+    setCurrentValue,
+    setMaxValue,
+    setStartValue
+} from "../reducers/counterReducer";
 
 export const Counter = () => {
 
@@ -22,11 +28,13 @@ export const Counter = () => {
         setErrorStart(false)
         dispatchState(setStartValue(value))
     }, [dispatchState]);
+
     const setMax = useCallback((value: number) => {
         setErrorMax(false)
         setErrorStart(false)
         dispatchState(setMaxValue(value))
     }, [dispatchState]);
+
     const setValue = useCallback(() => {
         if(!(state.startValue >= 0 && state.maxValue >= 0)) {
             setErrorMax(true)
@@ -40,6 +48,15 @@ export const Counter = () => {
 
         dispatchState(setCurrentValue())
     }, [state, dispatchState]);
+
+    const incrementValue = useCallback(() => {
+        console.log(state)
+        if(state.maxValue > state.currentValue) {
+            dispatchState(incrementCurrentValue())
+        } else {
+            setErrorMax(true)
+        }
+    },[state, dispatchState]);
 
     return (
         <div style={{
@@ -61,7 +78,7 @@ export const Counter = () => {
                 <h1 style={{margin: '0px'}}>{state.currentValue}</h1>
 
                 <div style={{display: 'flex', gap: '10px', maxWidth: '200px'}}>
-                    <Button label={'Inc'} disabled={(errorStart || errorMax)} onClick={() => alert('Inc')} />
+                    <Button label={'Inc'} disabled={(errorStart || errorMax)} onClick={incrementValue} />
                     <Button label={'Reset'} onClick={() => alert('Reset')} />
                 </div>
             </div>
