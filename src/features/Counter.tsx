@@ -4,7 +4,8 @@ import {Button} from "../components/base/Button";
 import {
     counterReducer,
     incrementCurrentValue,
-    setCurrentValue, setErrorMessage,
+    setCurrentValue,
+    setErrorMessage,
     setMaxValue,
     setStartValue
 } from "../reducers/counterReducer";
@@ -80,8 +81,11 @@ export const Counter = () => {
             </div>
 
             <div
-                style={{display: 'flex', flexDirection: 'column', gap: '10px', textAlign: "center", maxWidth: '200px'}}>
-                <h1 style={{margin: '0px'}}>{state.currentValue}</h1>
+                style={{display: 'flex', alignItems: 'center', flexDirection: 'column', gap: '10px', textAlign: "center", maxWidth: '200px'}}>
+                {state.error ?
+                    <p style={{margin: '0px', color: 'red'}}>{state.error}</p> :
+                    <h1 style={{margin: '0px'}}>{state.currentValue}</h1>
+                }
 
                 <div style={{display: 'flex', gap: '10px', maxWidth: '200px'}}>
                     <Button label={'Inc'} disabled={(errorStart || errorMax)} onClick={incrementValue} />
