@@ -20,6 +20,10 @@ export const counterReducer = (state: CounterItem, action: TsarType): CounterIte
             return {...state, error: action.payload.message};
         }
 
+        case "RESET-STATE": {
+            return {...state, currentValue: 0, maxValue: 0, startValue: 0, error: ''};
+        }
+
         default:
             return state;
     }
@@ -53,3 +57,6 @@ export const setErrorMessage = (message: string) => ({
     }
 } as const)
 
+export const resetState = () => ({
+    type: 'RESET-STATE',
+} as const)

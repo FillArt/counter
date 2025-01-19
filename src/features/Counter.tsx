@@ -3,7 +3,7 @@ import {Input} from "../components/base/Input";
 import {Button} from "../components/base/Button";
 import {
     counterReducer,
-    incrementCurrentValue,
+    incrementCurrentValue, resetState,
     setCurrentValue,
     setErrorMessage,
     setMaxValue,
@@ -64,6 +64,11 @@ export const Counter = () => {
         }
     },[state, dispatchState]);
 
+    const resetAll = useCallback(() => {
+        dispatchState(resetState())
+        setErrorMax(false)
+        setErrorStart(false)
+    }, [state, dispatchState]);
 
     return (
         <div style={{
@@ -89,7 +94,7 @@ export const Counter = () => {
 
                 <div style={{display: 'flex', gap: '10px', maxWidth: '200px'}}>
                     <Button label={'Inc'} disabled={(errorStart || errorMax)} onClick={incrementValue} />
-                    <Button label={'Reset'} onClick={() => alert('Reset')} />
+                    <Button label={'Reset'} onClick={resetAll} />
                 </div>
             </div>
         </div>
