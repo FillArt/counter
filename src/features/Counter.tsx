@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer, useState} from 'react';
+import React, {useCallback, useEffect, useReducer, useState} from 'react';
 import {Input} from "../components/base/Input";
 import {Button} from "../components/base/Button";
 import {
@@ -9,11 +9,23 @@ import {
     setMaxValue,
     setStartValue
 } from "../reducers/counterReducer";
+import {CounterItem} from "../types/Counter";
 
 export const Counter = () => {
 
     const [errorStart, setErrorStart] = useState(false)
     const [errorMax, setErrorMax] = useState(false)
+
+    const initState = (): CounterItem => {
+        const localState = localStorage.getItem('local-state');
+        return localState ? JSON.parse(localState) : {
+            startValue: 0,
+            maxValue: 0,
+            currentValue: 0,
+            error: ''
+        };
+    };
+
 
     const [state, dispatchState] = useReducer(counterReducer,
         {
@@ -21,8 +33,13 @@ export const Counter = () => {
             maxValue: 0,
             currentValue: 0,
             error: ''
-        }
+        }, initState
     );
+
+    useEffect(() => {
+        localStorage.setItem('local-state', JSON.stringify(state));
+        console.log(state);
+    }, [state]);
 
     const setStart = useCallback((value: number) => {
         setErrorMax(false)
