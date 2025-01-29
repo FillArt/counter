@@ -1,6 +1,13 @@
 import {CounterItem, TsarType} from "../../types/Counter";
 
-export const counterReducer = (state: CounterItem, action: TsarType): CounterItem => {
+const initialState: CounterItem = {
+    startValue: 0,
+    maxValue: 0,
+    currentValue: 0,
+    error: ''
+}
+
+export const counterReducer = (state: CounterItem = initialState, action: TsarType): CounterItem => {
     switch (action.type) {
         case "SET-START-VALUE":
             return {...state, startValue: action.payload.digit};
