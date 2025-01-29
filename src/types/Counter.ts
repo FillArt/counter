@@ -4,7 +4,7 @@ import {
     setCurrentValue,
     incrementCurrentValue,
     setErrorMessage, resetState
-} from "../reducers/counterReducer";
+} from "../store/reducers/counterReducer";
 
 export type CounterItem = {
     startValue: number,

@@ -6,7 +6,7 @@ import {
     setMaxValue,
     setStartValue
 } from "./counterReducer";
-import {CounterItem} from "../types/Counter";
+import {CounterItem} from "../../types/Counter";
 
 export {}
 
