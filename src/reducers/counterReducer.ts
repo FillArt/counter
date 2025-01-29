@@ -13,7 +13,7 @@ export const counterReducer = (state: CounterItem, action: TsarType): CounterIte
         }
 
         case "INCREMENT-CURRENT-VALUE": {
-            return {...state, currentValue: state.currentValue++};
+            return {...state, currentValue: state.currentValue + 1};
         }
 
         case "SET-ERROR-MESSAGE": {

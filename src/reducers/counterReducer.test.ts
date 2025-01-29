@@ -1,4 +1,4 @@
-import {counterReducer, setMaxValue, setStartValue} from "./counterReducer";
+import {counterReducer, incrementCurrentValue, setMaxValue, setStartValue} from "./counterReducer";
 import {CounterItem} from "../types/Counter";
 
 export {}
@@ -28,6 +28,12 @@ describe('Tests for Counter', () => {
         const newState = counterReducer(state, action);
 
         expect(newState.maxValue).toBe(10);
+    })
 
+    test('Increment current value', () => {
+        const action = incrementCurrentValue();
+        const newState = counterReducer(state, action);
+
+        expect(newState.currentValue).toBe(1)
     })
 })
