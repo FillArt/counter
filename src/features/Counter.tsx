@@ -8,7 +8,7 @@ import {
     setErrorMessage,
     setMaxValue,
     setStartValue
-} from "../reducers/counterReducer";
+} from "../store/reducers/counterReducer";
 import {CounterItem} from "../types/Counter";
 
 export const Counter = () => {

@@ -1,4 +1,4 @@
-import {CounterItem, TsarType} from "../types/Counter";
+import {CounterItem, TsarType} from "../../types/Counter";
 
 export const counterReducer = (state: CounterItem, action: TsarType): CounterItem => {
     switch (action.type) {
