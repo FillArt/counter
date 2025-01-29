@@ -1,14 +1,17 @@
-import React, {useCallback, useEffect, useReducer, useState} from 'react';
+import React, {useCallback, useReducer, useState} from 'react';
 import {Input} from "../components/base/Input";
 import {Button} from "../components/base/Button";
 import {
     counterReducer,
-    incrementCurrentValue, resetState,
+    incrementCurrentValue,
+    resetState,
     setCurrentValue,
     setErrorMessage,
     setMaxValue,
     setStartValue
 } from "../store/reducers/counterReducer";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../store/store";
 import {CounterItem} from "../types/Counter";
 
 export const Counter = () => {
@@ -16,76 +19,69 @@ export const Counter = () => {
     const [errorStart, setErrorStart] = useState(false)
     const [errorMax, setErrorMax] = useState(false)
 
-    const initState = (): CounterItem => {
-        const localState = localStorage.getItem('local-state');
-        return localState ? JSON.parse(localState) : {
-            startValue: 0,
-            maxValue: 0,
-            currentValue: 0,
-            error: ''
-        };
-    };
+    const state = useSelector<RootState, CounterItem>(state => state.counter)
+    const dispatch = useDispatch();
 
+    // const initState = (): CounterItem => {
+    //     const localState = localStorage.getItem('local-state');
+    //     return localState ? JSON.parse(localState) : {
+    //         startValue: 0,
+    //         maxValue: 0,
+    //         currentValue: 0,
+    //         error: ''
+    //     };
+    // };
 
-    const [state, dispatchState] = useReducer(counterReducer,
-        {
-            startValue: 0,
-            maxValue: 0,
-            currentValue: 0,
-            error: ''
-        }, initState
-    );
-
-    useEffect(() => {
-        localStorage.setItem('local-state', JSON.stringify(state));
-        console.log(state);
-    }, [state]);
+    // useEffect(() => {
+    //     localStorage.setItem('local-state', JSON.stringify(state));
+    //     console.log(state);
+    // }, [state]);
 
     const setStart = useCallback((value: number) => {
         setErrorMax(false)
         setErrorStart(false)
-        dispatchState(setStartValue(value))
-        dispatchState(setErrorMessage(''))
-    }, [dispatchState]);
+        dispatch(setStartValue(value))
+        dispatch(setErrorMessage(''))
+    }, [dispatch]);
 
     const setMax = useCallback((value: number) => {
         setErrorMax(false)
         setErrorStart(false)
-        dispatchState(setMaxValue(value))
-        dispatchState(setErrorMessage(''))
-    }, [dispatchState]);
+        dispatch(setMaxValue(value))
+        dispatch(setErrorMessage(''))
+    }, [dispatch]);
 
     const setValue = useCallback(() => {
         if(!(state.startValue >= 0 && state.maxValue >= 0)) {
             setErrorMax(true)
             setErrorStart(true)
-            dispatchState(setErrorMessage('Values less than 0'))
+            dispatch(setErrorMessage('Values less than 0'))
             return;
         }
         if(state.maxValue <= state.startValue) {
             setErrorMax(true)
-            dispatchState(setErrorMessage('The maximum value is less than or equal to the starting value.'))
+            dispatch(setErrorMessage('The maximum value is less than or equal to the starting value.'))
             return;
         }
 
-        dispatchState(setCurrentValue())
-    }, [state, dispatchState]);
+        dispatch(setCurrentValue())
+    }, [state, dispatch]);
 
     const incrementValue = useCallback(() => {
         console.log(state)
         if(state.maxValue > state.currentValue) {
-            dispatchState(incrementCurrentValue())
+            dispatch(incrementCurrentValue())
         } else {
             setErrorMax(true)
-            dispatchState(setErrorMessage('You have reached the maximum value'))
+            dispatch(setErrorMessage('You have reached the maximum value'))
         }
-    },[state, dispatchState]);
+    },[state, dispatch]);
 
     const resetAll = useCallback(() => {
-        dispatchState(resetState())
+        dispatch(resetState())
         setErrorMax(false)
         setErrorStart(false)
-    }, [state, dispatchState]);
+    }, [state, dispatch]);
 
     return (
         <div style={{
