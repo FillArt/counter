@@ -1,4 +1,11 @@
-import {counterReducer, incrementCurrentValue, setErrorMessage, setMaxValue, setStartValue} from "./counterReducer";
+import {
+    counterReducer,
+    incrementCurrentValue,
+    resetState,
+    setErrorMessage,
+    setMaxValue,
+    setStartValue
+} from "./counterReducer";
 import {CounterItem} from "../types/Counter";
 
 export {}
@@ -13,7 +20,6 @@ describe('Tests for Counter', () => {
             currentValue: 0,
             error: ''
         }
-
     })
 
     test('Set start value', () => {
@@ -42,5 +48,15 @@ describe('Tests for Counter', () => {
         const newState = counterReducer(state, action);
 
         expect(newState.error).toBe('Error');
+    })
+
+    test('Reset state', () => {
+        const action = resetState();
+        const newState = counterReducer(state, action);
+
+        expect(newState.currentValue).toBe(0);
+        expect(newState.maxValue).toBe(0);
+        expect(newState.startValue).toBe(0);
+        expect(newState.error).toBe('');
     })
 })
